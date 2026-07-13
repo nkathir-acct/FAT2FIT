@@ -1,0 +1,460 @@
+/* ==========================================================================
+   FAT2FIT — STYLES
+   ==========================================================================
+   Dark mode, mobile-first. Large type, large buttons, minimal palette.
+   No gradients, no decorative animation. Apple Health-like restraint.
+
+   Base sizing is tuned for iPhone 15 Pro in portrait (393 x 852 CSS px,
+   with a Dynamic Island safe area at top and a home-indicator safe area
+   at bottom, both handled via env(safe-area-inset-*) below). The
+   responsive rule at the bottom scales type up for larger screens;
+   nothing shrinks below the iPhone 15 Pro baseline.
+   ========================================================================== */
+
+:root {
+  /* Palette */
+  --color-bg: #000000;
+  --color-surface: #1c1c1e;
+  --color-border: #2c2c2e;
+  --color-text: #ffffff;
+  --color-text-dim: #98989d;
+  --color-accent: #0a84ff;
+  --color-accent-text: #ffffff;
+
+  /* Type scale */
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  /* Spacing */
+  --space-sm: 12px;
+  --space-md: 24px;
+  --space-lg: 40px;
+
+  /* Shape */
+  --radius: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior-y: contain;
+}
+
+button {
+  font-family: inherit;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------
+   SCREEN MANAGEMENT
+   Only one .screen has the .active class at a time. script.js toggles
+   this class to move between screens.
+   -------------------------------------------------------------------- */
+.screen {
+  display: none;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  flex-direction: column;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* --------------------------------------------------------------------
+   HOME SCREEN
+   -------------------------------------------------------------------- */
+.home-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-md);
+}
+
+.home-title {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  text-align: center;
+  margin: var(--space-lg) 0 var(--space-md) 0;
+}
+
+.home-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(4, 1fr);
+  gap: var(--space-md);
+}
+
+.workout-btn {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 28px;
+  font-weight: 600;
+  min-height: 64px;
+  cursor: pointer;
+}
+
+.workout-btn:active {
+  background: var(--color-border);
+}
+
+/* --------------------------------------------------------------------
+   SHARED — exercise / active-set / rest content layout
+   -------------------------------------------------------------------- */
+.exercise-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: calc(var(--space-md) + 48px) var(--space-md) var(--space-md);
+  gap: var(--space-sm);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  text-align: center;
+}
+
+.media-block {
+  position: relative;
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+}
+
+/* Exercise screen: the video is the primary visual reference and
+   occupies nearly the full available width. */
+.media-block-primary {
+  max-width: 560px;
+  aspect-ratio: 1 / 1;
+}
+
+/* Active Set / Rest screens: the countdown/count-up timer is the
+   dominant element on these screens, so the video is kept smaller —
+   a supporting form-check reference rather than the main focus. */
+.media-block-support {
+  max-width: 220px;
+  aspect-ratio: 1 / 1;
+}
+
+.media-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: var(--color-surface);
+}
+
+/* Muscle reference image: intentionally small and secondary to the video. */
+.muscle-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  object-fit: cover;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  margin: 2px 0 0 0;
+}
+
+.progress-label {
+  font-size: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+.exercise-name {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.set-info {
+  font-size: 20px;
+  color: var(--color-text-dim);
+  margin: 0;
+}
+
+.rep-target {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0;
+}
+
+.description {
+  font-size: 17px;
+  color: var(--color-text-dim);
+  margin: 0;
+  max-width: 480px;
+}
+
+.cue {
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin: 0;
+  max-width: 480px;
+}
+
+.next-label {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+  margin: var(--space-sm) 0 0 0;
+}
+
+/* --------------------------------------------------------------------
+   TIMERS
+   -------------------------------------------------------------------- */
+.timer {
+  font-size: clamp(72px, 20vw, 92px);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  margin: var(--space-sm) 0;
+}
+
+/* Used on the Active Set and Rest screens: the largest, most visually
+   dominant element on those screens — clamped to viewport width so it
+   scales with the device without ever overflowing. */
+.timer-hero {
+  font-size: clamp(84px, 27vw, 132px);
+  line-height: 1;
+  margin: var(--space-sm) 0;
+}
+
+.timer-countdown {
+  color: var(--color-accent);
+}
+
+.timer-countup {
+  color: var(--color-text);
+}
+
+.rest-message {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--color-text);
+  min-height: 30px;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------
+   BUTTONS
+   -------------------------------------------------------------------- */
+.primary-btn {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  border: none;
+  border-radius: var(--radius);
+  font-size: 24px;
+  font-weight: 700;
+  min-height: 64px;
+  padding: 20px;
+  margin: var(--space-md);
+  cursor: pointer;
+}
+
+.primary-btn:active {
+  opacity: 0.8;
+}
+
+.secondary-btn {
+  background: var(--color-surface);
+  color: var(--color-text-dim);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  font-size: 20px;
+  font-weight: 600;
+  min-height: 64px;
+  padding: 20px;
+  margin: var(--space-md) 0 var(--space-md) var(--space-md);
+  cursor: pointer;
+}
+
+.secondary-btn:active {
+  background: var(--color-border);
+}
+
+.button-row {
+  display: flex;
+  align-items: stretch;
+  gap: var(--space-sm);
+}
+
+/* The primary action (Complete Set / Skip Rest) stays visually dominant:
+   larger share of width, filled accent color, bolder weight than Pause. */
+.button-row .primary-btn {
+  flex: 1.4;
+  margin-left: 0;
+}
+
+.button-row .secondary-btn {
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------
+   WARM-UP / COOL-DOWN
+   -------------------------------------------------------------------- */
+.prep-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: calc(var(--space-md) + 48px) var(--space-md) var(--space-md);
+}
+
+.prep-label {
+  font-size: 17px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-dim);
+  margin: 0 0 var(--space-sm) 0;
+}
+
+.prep-movement {
+  font-size: 36px;
+  font-weight: 700;
+  margin: 0 0 var(--space-md) 0;
+}
+
+/* --------------------------------------------------------------------
+   WORKOUT COMPLETE
+   -------------------------------------------------------------------- */
+.complete-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+}
+
+.complete-check {
+  font-size: 72px;
+  line-height: 1;
+  color: var(--color-accent);
+}
+
+.complete-title {
+  font-size: 34px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------
+   BACK BUTTON
+   Present on every screen after Home except Workout Complete (a
+   terminal screen with nothing to go back into). Fixed in the top-left
+   corner so it never disturbs the existing centered screen layouts.
+   -------------------------------------------------------------------- */
+.back-btn {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 16px);
+  left: 16px;
+  min-height: 44px;
+  padding: 0 18px 0 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  color: var(--color-text-dim);
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.back-btn:active {
+  background: var(--color-border);
+}
+
+/* --------------------------------------------------------------------
+   VOICE TOGGLE (Home screen only)
+   -------------------------------------------------------------------- */
+.voice-toggle-btn {
+  position: fixed;
+  top: calc(env(safe-area-inset-top) + 16px);
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.voice-toggle-btn:active {
+  background: var(--color-border);
+}
+
+/* --------------------------------------------------------------------
+   PAUSE OVERLAY
+   -------------------------------------------------------------------- */
+.pause-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-lg);
+  z-index: 10;
+}
+
+.pause-overlay.active {
+  display: flex;
+}
+
+.pause-label {
+  font-size: 30px;
+  font-weight: 700;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------
+   RESPONSIVE — slightly larger type on wider screens
+   -------------------------------------------------------------------- */
+@media (min-width: 480px) {
+  .exercise-name {
+    font-size: 36px;
+  }
+
+  .home-title {
+    font-size: 48px;
+  }
+}

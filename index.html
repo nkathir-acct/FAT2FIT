@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>FAT2FIT</title>
+
+  <!-- Progressive Web App / "Add to Home Screen" support -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#000000">
+  <link rel="apple-touch-icon" href="assets/icons/icon-180.png">
+  <link rel="icon" href="assets/icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="FAT2FIT">
+  <meta name="mobile-web-app-capable" content="yes">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       HOME SCREEN — four workout buttons, nothing else
+       ============================================================ -->
+  <section id="screen-home" class="screen active">
+    <button type="button" id="btn-voice-toggle" class="voice-toggle-btn" aria-pressed="true" aria-label="Voice guidance on">🔊</button>
+    <div class="home-content">
+      <h1 class="home-title">FAT2FIT</h1>
+      <div class="home-grid">
+        <button type="button" class="workout-btn" data-workout="lower-a">Lower A</button>
+        <button type="button" class="workout-btn" data-workout="upper-a">Upper A</button>
+        <button type="button" class="workout-btn" data-workout="lower-b">Lower B</button>
+        <button type="button" class="workout-btn" data-workout="upper-b">Upper B</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WARM-UP SCREEN — one movement at a time, auto-advancing
+       ============================================================ -->
+  <section id="screen-warmup" class="screen">
+    <button type="button" class="back-btn">‹ Back</button>
+    <div class="prep-content">
+      <p class="prep-label">Warm-up</p>
+      <h1 id="warmup-movement" class="prep-movement" aria-live="polite">&nbsp;</h1>
+      <div id="warmup-timer" class="timer timer-countdown">0:00</div>
+    </div>
+    <div class="button-row">
+      <button type="button" id="btn-next-warmup" class="secondary-btn">NEXT MOVEMENT</button>
+      <button type="button" id="btn-finish-warmup" class="primary-btn">FINISH WARM-UP</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       EXERCISE SCREEN — shown before a set begins
+       ============================================================ -->
+  <section id="screen-exercise" class="screen">
+    <button type="button" class="back-btn">‹ Back</button>
+    <div class="exercise-content">
+      <p id="exercise-progress" class="progress-label">&nbsp;</p>
+      <h1 id="exercise-name" class="exercise-name">&nbsp;</h1>
+
+      <div class="media-block media-block-primary">
+        <video id="exercise-video" class="media-video" muted playsinline loop autoplay aria-hidden="true"></video>
+      </div>
+      <img id="exercise-muscle" class="muscle-thumb" alt="">
+
+      <p id="exercise-set-info" class="set-info">&nbsp;</p>
+      <p id="exercise-reps" class="rep-target">&nbsp;</p>
+      <p id="exercise-description" class="description">&nbsp;</p>
+      <p id="exercise-cue" class="cue">&nbsp;</p>
+    </div>
+
+    <button type="button" id="btn-start-set" class="primary-btn">START SET</button>
+  </section>
+
+  <!-- ============================================================
+       ACTIVE SET SCREEN — shown while the set is in progress
+       ============================================================ -->
+  <section id="screen-active" class="screen">
+    <button type="button" class="back-btn">‹ Back</button>
+    <div class="exercise-content">
+      <h1 id="active-name" class="exercise-name">&nbsp;</h1>
+
+      <div class="media-block media-block-support">
+        <video id="active-video" class="media-video" muted playsinline loop autoplay aria-hidden="true"></video>
+      </div>
+
+      <div id="active-timer" class="timer timer-countup timer-hero" aria-label="Set timer">0:00</div>
+
+      <p id="active-set-info" class="set-info">&nbsp;</p>
+      <p id="active-reps" class="rep-target">&nbsp;</p>
+    </div>
+
+    <div class="button-row">
+      <button type="button" id="btn-pause-active" class="secondary-btn">PAUSE</button>
+      <button type="button" id="btn-complete-set" class="primary-btn">COMPLETE SET</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       REST SCREEN — countdown, then auto-advances
+       ============================================================ -->
+  <section id="screen-rest" class="screen">
+    <button type="button" class="back-btn">‹ Back</button>
+    <div class="exercise-content">
+      <div id="rest-timer" class="timer timer-countdown timer-hero" aria-label="Rest timer">0:00</div>
+      <p id="rest-message" class="rest-message" aria-live="polite"></p>
+
+      <p id="rest-progress" class="progress-label">&nbsp;</p>
+      <p class="next-label">Next</p>
+      <h1 id="rest-next-name" class="exercise-name">&nbsp;</h1>
+
+      <div class="media-block media-block-support">
+        <video id="rest-video" class="media-video" muted playsinline loop autoplay aria-hidden="true"></video>
+      </div>
+      <img id="rest-muscle" class="muscle-thumb" alt="">
+
+      <p id="rest-description" class="description">&nbsp;</p>
+      <p id="rest-cue" class="cue">&nbsp;</p>
+    </div>
+
+    <div class="button-row">
+      <button type="button" id="btn-pause-rest" class="secondary-btn">PAUSE</button>
+      <button type="button" id="btn-skip-rest" class="primary-btn">SKIP REST</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COOL-DOWN SCREEN — one stretch at a time, auto-advancing
+       ============================================================ -->
+  <section id="screen-cooldown" class="screen">
+    <button type="button" class="back-btn">‹ Back</button>
+    <div class="prep-content">
+      <p class="prep-label">Cool-down</p>
+      <h1 id="cooldown-movement" class="prep-movement" aria-live="polite">&nbsp;</h1>
+      <div id="cooldown-timer" class="timer timer-countdown">0:00</div>
+    </div>
+    <div class="button-row">
+      <button type="button" id="btn-next-cooldown" class="secondary-btn">NEXT STRETCH</button>
+      <button type="button" id="btn-finish-cooldown" class="primary-btn">FINISH COOL-DOWN</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       WORKOUT COMPLETE SCREEN
+       ============================================================ -->
+  <section id="screen-complete" class="screen">
+    <div class="complete-content">
+      <div class="complete-check" aria-hidden="true">&#10003;</div>
+      <h1 class="complete-title">Workout Complete</h1>
+      <button type="button" id="btn-home" class="primary-btn">HOME</button>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAUSE OVERLAY — shown over active-set / rest screens
+       ============================================================ -->
+  <div id="pause-overlay" class="pause-overlay" role="dialog" aria-modal="true" aria-label="Workout paused">
+    <p class="pause-label">Paused</p>
+    <button type="button" id="btn-resume" class="primary-btn">RESUME</button>
+  </div>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
