@@ -173,9 +173,9 @@ const COOLDOWN_MOVEMENTS = [
 // any other application code.
 // ---------------------------------------------------------------------------
 function getVideoPath(slug) {
-  return `assets/videos/${slug}.mp4`;
+  return `assets/videos/${slug}.MP4`;
 }
 
 function getMusclePath(slug) {
-  return `assets/muscles/${slug}.png`;
+  return `assets/muscles/${slug}.PNG`;
 }
